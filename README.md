@@ -58,7 +58,7 @@ const rules: Rules = {
 }
 </pre>
 
-Each level of the routes key must implement the [Rule]() that has the following format:
+Each level of the routes key must implement the [Rule](https://github.com/Paradoxu/Express-Rules/blob/master/src/request_rule.ts) that has the following format:
 
 <pre>
 interface Rule {
@@ -70,3 +70,18 @@ interface Rule {
     };
 }
 </pre>
+
+The optional methods `allowReadIf`, `allowWriteIf` and `allowAllIf` can define the behavior of the ruler when that level is reached and they have cascade effect, which mean that if request is rejected by any previous level, but authorize the request on the current level, the request will be rejected anyway, example:
+
+<pre>
+'client': {
+    allowAllIf: () => false,
+    routes: {
+	':id': {
+	    allowAllIf: () => true
+	},
+    }
+}
+</pre>
+
+In this example we have the `client` level that is rejecting any kind of request, but the route `client/:id` that accepts all, for performance reasons the ruler will stop on the first rejected rule, which means that it won't even reach the handler `allowAllIf` inside `:id`
