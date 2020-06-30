@@ -6,16 +6,9 @@ A simple ruler that will can help you sampling the way you apply rules to your r
 ## Usage
 
 #### Configuring your rules
-Preferably create and export a variable with your rules in a new file:
-<pre>
-const rules: Rules = {
-	global: {
-		allowAllIf: () => isAuthenticated === true
-	}
-}
-</pre>
+> Preferably create and export a variable with your rules in a new file.
 
-A Rules can have the following structure:
+Rules can have the following structure:
 <pre>
 {
     exclude?: string[];
