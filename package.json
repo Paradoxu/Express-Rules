@@ -18,6 +18,7 @@
 		"url": "https://github.com/Paradoxu/Express-Rules/issues"
 	},
 	"homepage": "https://github.com/Paradoxu/Express-Rules#readme",
+	"publishConfig": { "registry": "https://npm.pkg.github.com/" },
 	"devDependencies": {
 		"@types/express": "^4.17.6",
 		"typescript": "^3.9.5"
