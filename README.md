@@ -106,7 +106,7 @@ Example of request: `/client/20`
 - request: (RequestRule)[https://github.com/Paradoxu/Express-Rules/blob/master/src/request_rule.ts] it's just a simple wrapper around the original `Request` retrieved from the original request of express, that can help you to handle the request with simple method like:
 	- `maxLength(N: number): Return false if the length of the body is higher than N`
 	- `minLength(N: number): Return false if the length of the body is lower than N`
-	- `hasProps(p: string | string[]): Return true if the passed properties exists on the body of this request
+	- `hasProps(p: string | string[]): Return true if the passed properties exists on the body of this request`
 	- `isRead(): if the request type is a Get, Head or Options`
 	- `isWrite(): if the request type is a Post, Put or Delete`
 	
