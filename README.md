@@ -107,3 +107,11 @@ If you want have a better control of the validation of this information, you can
 
 You can also define schema like the [json schema](https://www.npmjs.com/package/jsonschema) package and pass this schema to the `validate(s: Schema)` method on the `RequestRule` object, that will return true, if the request matches with the given schema.
 
+Once you have defined your rules, just call the method configure like `expressRules().configure(myRules)` in the initialization of your app.
+And then pass the `ruler` as a middleware for your routes: 
+<pre>
+app.post('/client/:id', ruler, (req, res) => {
+  // ... handle your request
+});
+</pre>
+
