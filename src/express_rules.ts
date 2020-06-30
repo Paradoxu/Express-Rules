@@ -19,7 +19,6 @@ export class ExpressRules {
      * Handle a given rule and throw a new Error if one of the handlers of the rule rejects the request
      */
     private validateRule = (rule: Rule, reqRuler: RequestRule, levelValue: string): boolean => {
-        console.log(rule)
         if (rule.allowAllIf && !rule.allowAllIf(levelValue, reqRuler)) {
             throw new UnauthorizedOperation();
         } else if (rule.allowReadIf && reqRuler.isRead() && !rule.allowReadIf(levelValue, reqRuler)) {
