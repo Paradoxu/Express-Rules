@@ -1,0 +1,32 @@
+{
+	"name": "express-rules",
+	"version": "0.0.1-beta",
+	"description": "A simple ruler that will can help you sampling the way you apply rules to your routes",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"prepublish": "tsc"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Paradoxu/Express-Rules.git"
+	},
+	"keywords": [
+		"express",
+		"rules",
+		"validator"
+	],
+	"author": "Leo Letto",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Paradoxu/Express-Rules/issues"
+	},
+	"homepage": "https://github.com/Paradoxu/Express-Rules#readme",
+	"devDependencies": {
+		"@types/express": "^4.17.6",
+		"typescript": "^3.9.5"
+	},
+	"dependencies": {
+		"jsonschema": "^1.2.6"
+	}
+}
