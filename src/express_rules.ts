@@ -62,7 +62,6 @@ export class ExpressRules {
     public ruler = (req: Request, _res: Response, next: NextFunction) => {
         const oPaths = this.paths(req.route.path);
         const rPaths = this.paths(req.originalUrl);
-        const requestRule = new RequestRule(req);
 
         let index = 0;
         let levelRule = this.getLevelRule(oPaths[index], rPaths[index], null);
@@ -72,13 +71,14 @@ export class ExpressRules {
          * ignore rules setted inside of the given exclude array
          */
         if (this.rules.global && !this.rules.exclude?.includes(levelRule.path)) {
+            let requestRule = new RequestRule(req, this.rules.global);
             this.validateRule(this.rules.global, requestRule, 'global');
         }
-        while (
-            levelRule.rule !== null &&
-            this.validateRule(levelRule.rule, requestRule, levelRule.path) &&
-            index < oPaths.length
-        ) {
+
+        while (levelRule.rule !== null && index < oPaths.length) {
+            let requestRule = new RequestRule(req, levelRule.rule);
+            this.validateRule(levelRule.rule, requestRule, levelRule.path);
+
             index++;
             levelRule = this.getLevelRule(oPaths[index], rPaths[index], levelRule.rule);
         }

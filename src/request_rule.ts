@@ -2,14 +2,18 @@
 
 import { Request } from 'express';
 import { validate, Schema } from 'jsonschema';
+import { Rule } from './interfaces';
 
 export class RequestRule {
     private originalRequest: Request;
     private readTypes = ['GET', 'HEAD', 'OPTIONS'];
     private writeTypes = ['POST', 'PUT', 'DELETE'];
 
-    constructor(request: Request) {
+    private rule: Rule | null;
+
+    constructor(request: Request, rule: Rule | null) {
         this.originalRequest = request;
+        this.rule = rule;
     }
 
     private contentLength = () => JSON.stringify(this.originalRequest.body).length;
@@ -53,9 +57,17 @@ export class RequestRule {
     isWrite = () => this.writeTypes.includes(this.original().method);
 
     /**
-     * Validate the body with the given schema, the validation will be made using the jsonschema package,
+     * Validate the body of the current rule level using the defined schema for this level, 
      * 
+     * If no schema has been defined or the body doesn't exist, it will return false
+     * 
+     * Lean more about schemas on:
      * @tutorial https://www.npmjs.com/package/jsonschema
      */
-    validSchema = (schema: Schema) => validate(this.original().body, schema).valid;
+    get isValid(): boolean {
+        let hasBody = this.original() && this.original().body;
+        let schemaValidation = validate(this.original().body, (this.rule?.schema || {})).valid;
+
+        return hasBody && schemaValidation;
+    }
 }

@@ -1,4 +1,5 @@
 import { RequestRule } from "./request_rule";
+import { Schema } from "jsonschema";
 
 export interface Rule {
     /**
@@ -37,6 +38,12 @@ export interface Rule {
      * Keep your handler small and fast as possible, to avoid wasting time validating the rules
      */
     allowAllIf?: (levelValue: string, req: RequestRule) => boolean,
+
+    /**
+     * Define an schema to be used with the RequestRule of this request
+     * and evaluate if the body is valid or not
+     */
+    schema?: Schema,
 
     /**
      * The routes children of the current one,
