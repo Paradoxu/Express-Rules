@@ -64,18 +64,18 @@ export interface Rule {
 
 export type Rules = {
     /**
-     * Exclude specific routes from the global rules,
-     * 
-     * If a route name is inserted here, the validator will skip the rules defined inside the of the global rules
-     * 
-     * this exclude array will only check for first level routes, which means that a value like: client/:id will have no effect
-     */
-    exclude?: string[],
-
-    /**
      * Use this to apply global rules for all routes inside the `routes`
      */
-    global?: Rule,
+    global?: Rule & {
+        /**
+         * Exclude specific routes from the global rules,
+         *
+         * If a route name is inserted here, the validator will skip the rules defined inside the of the global rules
+         *
+         * this exclude array will only check for first level routes, which means that a value like: client/:id will have no effect
+         */
+        exclude?: string[],
+    },
 
     routes?: {
         /**

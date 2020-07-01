@@ -70,7 +70,7 @@ export class ExpressRules {
          * Check if there is any global rule the global object,
          * ignore rules setted inside of the given exclude array
          */
-        if (this.rules.global && !this.rules.exclude?.includes(levelRule.path)) {
+        if (this.rules.global && !this.rules.global.exclude?.includes(levelRule.path)) {
             let requestRule = new RequestRule(req, this.rules.global);
             this.validateRule(this.rules.global, requestRule, 'global');
         }
