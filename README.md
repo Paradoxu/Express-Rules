@@ -58,13 +58,13 @@ Each level of the routes key must implement the [Rule](https://github.com/Parado
 
 <pre>
 interface Rule {
-    allowReadIf?: (levelValue: string, req: RequestRule) => boolean;
-    allowWriteIf?: (levelValue: string, req: RequestRule) => boolean;
-    allowAllIf?: (levelValue: string, req: RequestRule) => boolean;
+	allowReadIf?: (levelValue: string, req: RequestRule) => boolean;
+	allowWriteIf?: (levelValue: string, req: RequestRule) => boolean;
+	allowAllIf?: (levelValue: string, req: RequestRule) => boolean;
 	schema?: Schema;
-    routes?: {
-        [key: string]: Rule;
-    };
+	routes?: {
+		[key: string]: Rule;
+	};
 }
 </pre>
 
@@ -72,31 +72,31 @@ The optional methods `allowReadIf`, `allowWriteIf` and `allowAllIf` can define t
 
 <pre>
 'client': {
-    allowAllIf: () => false,
-    routes: {
+	allowAllIf: () => false,
+	routes: {
 		':id': {
 			allowAllIf: () => true
 		},
-    }
+	}
 }
 </pre>
 
 In this example we have the `client` level that is rejecting any kind of request, but the route `client/:id` that accepts all, for performance reasons the ruler will stop on the first rejected rule, which means that it won't even reach the handler `allowAllIf` inside `:id`. Any of these handler will be called with the parameters: `levelValue: string and request: RequestRule`, to help you handle the request easy.
 
-- levelValue: string is a string that has the value of the current level
+- levelValue: Is a string that has the value of the current level
 
 Example of request: `/client/20`
 
 <pre>
 'client': {
-    // value in this case will be a string equal to 'client'
-    allowAllIf: (value) => false,
-    routes: {
+	// value in this case will be a string equal to 'client'
+	allowAllIf: (value) => false,
+	routes: {
 		':id': {
 			// value is a string, but it's not equal to ':id' instead it will have the actual value of the route, which is '20'
 			allowAllIf: (value) => true
 		},
-    }
+	}
 }
 </pre>
 
