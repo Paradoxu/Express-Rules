@@ -54,14 +54,14 @@ const rules: Rules = {
 }
 </pre>
 
-Each level of the routes key must implement the [Rule](https://github.com/Paradoxu/Express-Rules/blob/master/src/request_rule.ts) that has the following format:
+Each level of the routes key must implement the [Rule](https://github.com/Paradoxu/Express-Rules/blob/master/src/request_rule.ts) interface that has the following format:
 
 <pre>
 interface Rule {
     allowReadIf?: (levelValue: string, req: RequestRule) => boolean;
     allowWriteIf?: (levelValue: string, req: RequestRule) => boolean;
     allowAllIf?: (levelValue: string, req: RequestRule) => boolean;
-	schema?: Schema,
+	schema?: Schema;
     routes?: {
         [key: string]: Rule;
     };
