@@ -1,6 +1,6 @@
 {
 	"name": "@paradoxu/express-rules",
-	"version": "0.0.7-beta",
+	"version": "0.0.8-beta",
 	"description": "A simple ruler that will can help you sampling the way you apply rules to your routes",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

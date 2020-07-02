@@ -59,7 +59,7 @@ export class ExpressRules {
     /**
      * A ruler that will handle the request and only pass to the next middleware if the current route request is allowed
      */
-    public ruler = (req: Request, _res: Response, next: NextFunction) => {
+    public ruler = (req: Request) => {
         const oPaths = this.paths(req.route.path);
         const rPaths = this.paths(req.originalUrl);
 
@@ -82,12 +82,32 @@ export class ExpressRules {
             index++;
             levelRule = this.getLevelRule(oPaths[index], rPaths[index], levelRule.rule);
         }
-
-        next();
     }
 
     /**
      * Configure the rules to be applied when the ruler handle is called
      */
     public configure = (rules: Rules) => this.rules = rules;
+
+    /**
+     * Call this method if you wish to modify express default prototype
+     * to always call your ruler, by doing so you won't need to pass a `ruler` to each route
+     * 
+     * @since 0.0.8-beta
+     * @description This is a test method that my change in the future
+     * @param route - The Route that can be retrieved from express module, ex: 
+     * const route = require('express').Route
+     */
+    public attach = (route: Function) => {
+        const defaultImplementation = route.prototype.dispatch;
+        const self = this;
+
+        route.prototype.dispatch = function handle(req: Request, res: Response, next: NextFunction) {
+            /// Validate the the call by calling the ruler
+            self.ruler(req);
+
+            // Once the rule is validated, call the default implementation
+            defaultImplementation.call(this, req, res, next);
+        };
+    }
 }

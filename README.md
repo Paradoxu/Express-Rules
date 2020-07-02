@@ -158,3 +158,29 @@ app.post('/client/:id', ruler, (req, res) => {
 
 > The `configure` method should be called only once, preferably when you start your app, if you call it more than once in different scripts, each call will override the previous rules.
 
+#### Attach to express
+
+Since version `0.0.8-beta` it is also possible to modify the default express dispatch handler to always call the our ruler before
+calling the route handle, by using this method it unnecessary to pass the ruler in every route.
+
+The `attach` method takes the Route function exposed by the `express` module, example:
+
+<pre>
+const Route = require('express').Route;
+
+expressRules.configure(myRules);
+expressRules.attach(Route); // Attach our ruler to `express` prototype
+</pre>
+
+And now you can just implement your routes like:
+
+<pre>
+app.post('/client/:id', (req, res) => {
+  // ... handle your request
+});
+</pre>
+
+And express will always call our `ruler` before your handlers. If you have multiple files with different Routes, you just need to call
+`attach` once when you start your app.
+
+> Attention, this is a test method that my change or be removed in the future!
